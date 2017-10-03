@@ -37,6 +37,29 @@ function sendLoginButton(recipientId){
     callSendAPI(messageData);
 }
 
+function sendLogoutButton(recipient_id){
+    let messageData = {
+        recipient: {
+            id: recipient_id
+        },
+        message: {
+            attachment:{
+                type: "template",
+                payload:{
+                    template_type: "button",
+                    text: "登出",
+                    buttons:[
+                        {
+                            "type": "account_unlink",
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    callSendAPI(messageData);
+}
+
 function callSendAPI(messageData) {
     request({
       uri: 'https://graph.facebook.com/v2.6/me/messages',
@@ -61,3 +84,4 @@ function callSendAPI(messageData) {
 
 module.exports.sendTextMessage = sendTextMessage;
 module.exports.sendLoginButton = sendLoginButton;
+module.exports.sendLogoutButton = sendLogoutButton;
