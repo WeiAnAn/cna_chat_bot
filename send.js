@@ -3,13 +3,37 @@ require("dotenv").config();
 
 function sendTextMessage(recipientId, messageText) {
     var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText
-      }
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: messageText
+        }
     };
+    callSendAPI(messageData);
+}
+
+function sendLoginButton(recipientId){
+    let messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment:{
+                type: "template",
+                payload:{
+                    template_type: "button",
+                    text: "請登入網管系統",
+                    buttons:[
+                        {
+                            "type": "account_link",
+                            "url": process.env.HOST + "/authorize"
+                        }
+                    ]
+                }
+            }
+        }
+    }
     callSendAPI(messageData);
 }
 
@@ -35,4 +59,5 @@ function callSendAPI(messageData) {
     });  
 }
 
-module.exports = sendTextMessage;
+module.exports.sendTextMessage = sendTextMessage;
+module.exports.sendLoginButton = sendLoginButton;
