@@ -1,4 +1,6 @@
 const db = require("../utils/db.js");
+const md5 = require("md5");
+require("dotenv").config();
 
 function authorizeView(req, res){
     return res.render("login", req.query);    
@@ -28,6 +30,10 @@ function authorize(req, res){
             }
         }
     );
+}
+
+function hashPassword(text){
+    return md5(md5(text)+process.env.HASH_SALT);
 }
 
 module.exports = {
