@@ -17,7 +17,7 @@ function authorize(req, res){
             else{
                 if(results.length == 1){
                     user = results[0];
-                    if(user.password == password){
+                    if(user.password == hashPassword(password)){
                         let authCodeObj = {
                             admin: true,
                             username: username
