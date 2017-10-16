@@ -55,12 +55,16 @@ function receivedAccountLinking(event){
         );
         if(user.admin){
             updateMsgId(user.username, senderID, function(err, results){
+                if(err)
+                    throw err;
                 if(results.affectedRows == 1)
                     sendTextMessage(senderID, "開啟通知成功");
             })
         }
     }else{
         removeMsgId(senderID, function(err, results){
+            if(err)
+                throw err;
             if(results.affectedRows == 1)
                 sendTextMessage(senderID, "關閉通知成功");
         })
@@ -76,7 +80,7 @@ function receivedMessage(event) {
 
     console.log("Received message for user %d and page %d at %d with message:", 
         senderID, recipientID, timeOfMessage);
-    // console.log(JSON.stringify(message));
+    console.log(JSON.stringify(message));
 
     var messageId = message.mid;
 
