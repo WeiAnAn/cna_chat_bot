@@ -3,7 +3,7 @@ html
         title login
 
     body
-        form(action="/authorize" method="post")
+        form(action="authorize" method="post")
             input(type="hidden", name="redirect_uri" value=redirect_uri)
             label username
             input(type="text" name="username")
