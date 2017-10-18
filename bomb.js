@@ -1,14 +1,44 @@
 const sendTextMessage = require("./src/utils/send.js").sendTextMessage;
-const db = require("./src/utils/db.js");
+const db = require("./src/utils/db");
+const mysql = require('mysql2');
 
-db.query("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL", function(err, results){
-    db.end();
-    results.forEach((user)=>{
-        Promise.resolve()
-            .then(()=>{
-                sendTextMessage(user.msg_id, "小八小藍機器爆炸拉!")}
-            ).catch((err)=>{
-                console.log(err)
+let connection = mysql.createConnection({
+    host: process.env.DB2_HOST,
+    user: process.env.DB2_USER,
+    password: process.env.DB2_PASS,
+    database: process.env.DB2_DATABASE
+});
+
+let sql = `SELECT description, hostname, status_event_count 
+	FROM host
+	WHERE status_event_count = 3;`
+
+connection.query(sql, function(err, rows){
+	connection.destroy();
+	if(err)
+		return console.log(err);
+
+	if(rows.length > 0 ){
+        if(err)
+            throw err;
+
+        if(rows.length > 3){
+            let message = "[爆炸] 一堆機器 下線啦!! 詳見S_monitor";
+            
+            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
+                results.foreach((users)=>{
+                    sendTextMessage(users.msg_id, message);
+                });
             });
-    });
+        }else{
+            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
+                rows.foreach((machine)=>{
+                    let message = `${machine.description} ( ${machine.hostname} ) 下線啦!!`;
+                    results.foreach((users)=>{
+                        sendTextMessage(users.msg_id, message);
+                    });
+                });
+            });
+        }		
+	}
 });
