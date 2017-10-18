@@ -9,7 +9,7 @@ function authorizeView(req, res){
 function authorize(req, res){
     let { username, password, redirect_uri } = req.body;
     db.execute(
-        "SELECT password FROM `users` WHERE username=?",
+        "SELECT password FROM `admin` WHERE username=?",
         [username],
         function(err, results){
             if(err)

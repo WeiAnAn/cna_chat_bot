@@ -109,7 +109,7 @@ function receivedMessage(event) {
 
 function updateMsgId(username, id, cb){
     db.execute(
-        "UPDATE `users` SET msg_id=? WHERE `username`=?",
+        "UPDATE `admin` SET msg_id=? WHERE `username`=?",
         [id, username],
         cb
     );
@@ -117,7 +117,7 @@ function updateMsgId(username, id, cb){
 
 function removeMsgId(msg_id, cb){
     let sql = db.execute(
-        "UPDATE `users` SET msg_id=NULL WHERE `msg_id`=?",
+        "UPDATE `admin` SET msg_id=NULL WHERE `msg_id`=?",
         [msg_id],
         cb
     );

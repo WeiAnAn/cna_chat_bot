@@ -1,7 +1,7 @@
 const sendTextMessage = require("./src/utils/send.js").sendTextMessage;
 const db = require("./src/utils/db.js");
 
-db.query("SELECT `msg_id` FROM `users` WHERE msg_id IS NOT NULL", function(err, results){
+db.query("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL", function(err, results){
     db.end();
     results.forEach((user)=>{
         Promise.resolve()
