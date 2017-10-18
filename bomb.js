@@ -26,15 +26,15 @@ connection.query(sql, function(err, rows){
             let message = "[爆炸] 一堆機器 下線啦!! 詳見S_monitor";
             
             db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
-                results.foreach((users)=>{
+                results.forEach((users)=>{
                     sendTextMessage(users.msg_id, message);
                 });
             });
         }else{
             db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
-                rows.foreach((machine)=>{
+                rows.forEach((machine)=>{
                     let message = `${machine.description} ( ${machine.hostname} ) 下線啦!!`;
-                    results.foreach((users)=>{
+                    results.forEach((users)=>{
                         sendTextMessage(users.msg_id, message);
                     });
                 });
