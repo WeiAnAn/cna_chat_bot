@@ -1,5 +1,6 @@
 const mysql2 = require("mysql2");
-require("dotenv").config();
+const path = require("path");
+const result = require("dotenv").config({path: path.resolve(__dirname, "../../.env")});
 
 let pool = mysql2.createPool({
     host: process.env.DB_HOST,
@@ -7,7 +8,5 @@ let pool = mysql2.createPool({
     password: process.env.DB_PASS,
     database: process.env.DB_DATABASE
 });
-
-// pool.execute("SELECT * FROM")
 
 module.exports = pool;

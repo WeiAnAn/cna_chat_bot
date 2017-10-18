@@ -1,6 +1,8 @@
+const path = require("path");
 const sendTextMessage = require("./src/utils/send.js").sendTextMessage;
 const db = require("./src/utils/db");
 const mysql = require('mysql2');
+require("dotenv").config({path: path.resolve(__dirname, ".env")});
 
 let connection = mysql.createConnection({
     host: process.env.DB2_HOST,
