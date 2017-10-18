@@ -27,7 +27,7 @@ function sendLoginButton(recipientId){
                     buttons:[
                         {
                             "type": "account_link",
-                            "url": process.env.HOST + "/authorize"
+                            "url": process.env.SUB_HOST + "/authorize"
                         }
                     ]
                 }
