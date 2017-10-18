@@ -25,13 +25,13 @@ connection.query(sql, function(err, rows){
         if(rows.length > 3){
             let message = "[爆炸] 一堆機器 下線啦!! 詳見S_monitor";
             
-            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
+            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` = 0 AND gid <= 8 AND enable = 1", function(err, results){
                 results.forEach((users)=>{
                     sendTextMessage(users.msg_id, message);
                 });
             });
         }else{
-            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` IS 0 AND gid <= 8 AND enable IS 1", function(err, results){
+            db.execute("SELECT `msg_id` FROM `admin` WHERE msg_id IS NOT NULL AND `graduated` = 0 AND gid <= 8 AND enable = 1", function(err, results){
                 rows.forEach((machine)=>{
                     let message = `${machine.description} ( ${machine.hostname} ) 下線啦!!`;
                     results.forEach((users)=>{
