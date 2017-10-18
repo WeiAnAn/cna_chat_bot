@@ -13,7 +13,7 @@ function authorize(req, res){
     if(redirect_uri === undefined)
         return res.send(400, "bad request");
     db.execute(
-        "SELECT password FROM `admin` WHERE username=?",
+        "SELECT password FROM `Admin` WHERE username=?",
         [username],
         function(err, results){
             if(err)
