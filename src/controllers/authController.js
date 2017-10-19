@@ -4,14 +4,14 @@ require("dotenv").config();
 
 function authorizeView(req, res){
     if(req.query.redirect_uri === undefined)
-        return res.send(400, "bad request");
+        return res.status(400).send("bad request");
     return res.render("login", req.query);    
 }
 
 function authorize(req, res){
     let { username, password, redirect_uri } = req.body;
     if(redirect_uri === undefined)
-        return res.send(400, "bad request");
+        return res.status(400).send("bad request");
     db.execute(
         "SELECT password FROM `Admin` WHERE username=?",
         [username],
